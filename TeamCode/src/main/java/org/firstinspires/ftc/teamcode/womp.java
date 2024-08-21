@@ -86,9 +86,9 @@ public class womp extends LinearOpMode {
 
         while (opModeIsActive()) {
             //Everything within this loop will now run until the stop button is pressed.
-            double drive = gamepad1.left_stick_y / (1/baseSpeed);
-            double strafe = gamepad1.left_stick_x / (1/baseSpeed);
-            double turn = gamepad1.right_stick_x / (1/baseSpeed);
+            double drive = gamepad1.left_stick_y / (1 / baseSpeed);
+            double strafe = gamepad1.left_stick_x / (1 / baseSpeed);
+            double turn = gamepad1.right_stick_x / (1 / baseSpeed);
 
             double frontLeftPower = drive + strafe + turn;
             double frontRightPower = drive - strafe - turn;
@@ -104,23 +104,26 @@ public class womp extends LinearOpMode {
 
 
             // Send calculated power to the motor
-            frontLeft.setPower((frontLeftPower)/limiter);
-            frontRight.setPower((frontRightPower)/limiter);
-            backLeft.setPower((backLeftPower)/limiter);
-            backRight.setPower((backRightPower)/limiter);
+            frontLeft.setPower((frontLeftPower) / limiter);
+            frontRight.setPower((frontRightPower) / limiter);
+            backLeft.setPower((backLeftPower) / limiter);
+            backRight.setPower((backRightPower) / limiter);
 
             telemetry.update();
         }
     }
+
     static double listMax(double[] list) {
         double Max = list[0];
         if (Max != 1) {
-        for (int i=0; i + 1 < list.length; i++) {
-            if (list[i] > list[i + 1]) {
-                Max = list[i + 1];
+            for (int i = 0; i + 1 < list.length; i++) {
+                if (list[i] > list[i + 1]) {
+                    Max = list[i + 1];
+                }
             }
+            return Max;
         }
-        return Max;
+        return 1;
+
     }
-}
 }
