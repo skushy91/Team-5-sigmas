@@ -57,10 +57,10 @@ public class womp extends LinearOpMode {
     public void runOpMode() {
         //motor setup
 
-        frontLeft = hardwareMap.get(DcMotor.class, "FrontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "FrontRight");
-        backLeft = hardwareMap.get(DcMotor.class, "BackLeft");
-        backRight = hardwareMap.get(DcMotor.class, "BackRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "Motor0");
+        frontRight = hardwareMap.get(DcMotor.class, "Motor2");
+        backLeft = hardwareMap.get(DcMotor.class, "Motor1");
+        backRight = hardwareMap.get(DcMotor.class, "Motor3");
         //change this as needed
 
         backLeft.setDirection(DcMotor.Direction.REVERSE);
