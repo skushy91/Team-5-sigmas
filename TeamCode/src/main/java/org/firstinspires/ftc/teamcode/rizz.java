@@ -29,10 +29,10 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -40,14 +40,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  This program contains an example of how to set up an OpMode, and run one motor.
   */
 
-@TeleOp(name="womp", group="Linear OpMode")
+@Autonomous
 //Used to tell the program how to show up on the driver hub. MUST be present.
 
 //@Disabled
 //If you uncomment the line above, this OpMode will not show up on the driverhub.
 //Useful for when you have old code that you still want to keep but don't intend
 //to use in the competition.
-public class womp extends LinearOpMode {
+public class rizz extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backLeft;
@@ -89,27 +89,48 @@ public class womp extends LinearOpMode {
         waitForStart();
         //this pauses the program until the play button is pressed again.
         double baseSpeed = 1;
+        double step = 1;
 
         while (opModeIsActive()) {
-            //Everything within this loop will now run until the stop button is pressed.
-            double drive = gamepad1.left_stick_y / (1 / baseSpeed);
-            double strafe = gamepad1.left_stick_x / (1 / baseSpeed);
-            double turn = gamepad1.right_stick_x / (1 / baseSpeed);
 
-            double frontLeftPower = drive + strafe + turn;
-            double frontRightPower = drive - strafe - turn;
-            double backLeftPower = drive - strafe + turn;
-            double backRightPower = drive + strafe - turn;
-            //power variables
-
-
-            double arm = gamepad2.right_trigger - gamepad2.left_trigger;
-            if (gamepad2.x) {
-                claw.setPosition(1);
+            if (step == 1) {
+                double frontLeftPower = baseSpeed;
+                double frontRightPower = baseSpeed;
+                double backLeftPower = baseSpeed;
+                double backRightPower = baseSpeed;
+                runtime.reset();
+                while (runtime.milliseconds() < 1000) {
+                    frontLeft.setPower((frontLeftPower));
+                    frontRight.setPower((frontRightPower));
+                    backLeft.setPower((backLeftPower));
+                    backRight.setPower((backRightPower));
+                }
+                if (runtime.milliseconds() > 999) {
+                    step = step + 1;
+                }
+            } else if (step == 2) {
+                double frontLeftPower = baseSpeed*-1;
+                double frontRightPower = baseSpeed*-1;
+                double backLeftPower = baseSpeed;
+                double backRightPower = baseSpeed;
+                runtime.reset();
+                while (runtime.milliseconds() < 1000) {
+                    frontLeft.setPower((frontLeftPower));
+                    frontRight.setPower((frontRightPower));
+                    backLeft.setPower((backLeftPower));
+                    backRight.setPower((backRightPower));
+                }
+                if (runtime.milliseconds() > 999) {
+                    step = step + 1;
+                }
             }
             else {
-                claw.setPosition(0);
+                frontLeft.setPower((0));
+                frontRight.setPower(0);
+                backLeft.setPower(0);
+                backRight.setPower(0);
             }
+
         /*
             double[] maxArray = {frontLeftPower, frontRightPower, backLeftPower, backRightPower};
             double limiter = listMax(maxArray);
@@ -121,11 +142,6 @@ public class womp extends LinearOpMode {
             backLeft.setPower((backLeftPower) / limiter);
             backRight.setPower((backRightPower) / limiter);
 */
-            frontLeft.setPower((frontLeftPower));
-            frontRight.setPower((frontRightPower));
-            backLeft.setPower((backLeftPower));
-            backRight.setPower((backRightPower));
-
             telemetry.update();
         }
     }

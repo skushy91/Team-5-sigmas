@@ -47,7 +47,6 @@ public class AutonTemplate extends LinearOpMode
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
-
     static final double FEET_PER_METER = 3.28084;
 
     // Lens intrinsics
